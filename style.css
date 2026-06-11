@@ -1,0 +1,127 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:      #6c63ff;
+  --accent:  #6c63ff;
+  --track:   #e5e5ef;
+  --white:   #ffffff;
+  --text:    #1a1a2e;
+  --tip-bg:  #1a1a2e;
+  --font:    'Poppins', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 36px 44px;
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+  animation: rise .5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes rise {
+  from { opacity:0; transform:translateY(24px) scale(.97); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+
+/* ── SKILL ROW ── */
+.skill { display: flex; flex-direction: column; gap: 8px; }
+
+.skill__name {
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+/* ── TRACK ── */
+.bar {
+  width: 100%;
+  height: 8px;
+  background: var(--track);
+  border-radius: 50px;
+  overflow: visible;
+  position: relative;
+}
+
+/* ── FILL ── */
+.fill {
+  height: 100%;
+  border-radius: 50px;
+  background: var(--accent);
+  position: relative;
+  width: 0;                       /* starts at 0 */
+  animation: grow 1.2s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* stagger each bar */
+.skill:nth-child(1) .fill { animation-delay: .1s; }
+.skill:nth-child(2) .fill { animation-delay: .25s; }
+.skill:nth-child(3) .fill { animation-delay: .4s; }
+.skill:nth-child(4) .fill { animation-delay: .55s; }
+.skill:nth-child(5) .fill { animation-delay: .7s; }
+
+/* final widths */
+.f90 { --w: 90%; }
+.f60 { --w: 60%; }
+.f85 { --w: 85%; }
+.f50 { --w: 50%; }
+.f75 { --w: 75%; }
+
+@keyframes grow {
+  to { width: var(--w); }
+}
+
+/* ── TOOLTIP ── */
+.tip {
+  position: absolute;
+  right: 0;
+  top: -34px;
+  background: var(--tip-bg);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  animation: tipIn .3s ease forwards;
+}
+
+/* tip appears after bar finishes growing */
+.skill:nth-child(1) .tip { animation-delay: 1.2s; }
+.skill:nth-child(2) .tip { animation-delay: 1.35s; }
+.skill:nth-child(3) .tip { animation-delay: 1.5s; }
+.skill:nth-child(4) .tip { animation-delay: 1.65s; }
+.skill:nth-child(5) .tip { animation-delay: 1.8s; }
+
+@keyframes tipIn {
+  from { opacity:0; transform:translateY(4px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* tip arrow */
+.tip::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  right: 10px;
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--tip-bg);
+}
